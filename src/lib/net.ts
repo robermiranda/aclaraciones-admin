@@ -1,34 +1,14 @@
-import { Taclaracion, TresponseServer } from '../types/aclaraciones'
+import { TresponseServer } from '../types/aclaraciones'
 
-
-export async function postAclaracion (aclaracion: Taclaracion): Promise<TresponseServer> {
-    try {
-        const response = await fetch('/aclaraciones', {
-            method : 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(aclaracion)
-        })
-
-        return response.json()
-    }
-    catch(error) {
-        return {
-            status: 'error',
-            msg: 'ERROR al obtener el nombre de los datos a aclarar'
-        }
-    }
-}
-
+const HOST = 'http://localhost:5000';
 
 export async function getAclaracion (numeroFolio: number | undefined): Promise<TresponseServer> {
     try {
         let response
-        if (numeroFolio) response = await fetch(`/aclaraciones/${numeroFolio}`)
-        else response = await fetch('/aclaraciones')
+        if (numeroFolio) response = await fetch(`${HOST}/aclaraciones/${numeroFolio}`);
+        else response = await fetch(`${HOST}/aclaraciones`);
 
-        return response.json()
+        return response.json();
     }
     catch(error) {
         return {
@@ -41,7 +21,7 @@ export async function getAclaracion (numeroFolio: number | undefined): Promise<T
 
 export async function getNombreDatosAclarar (): Promise<TresponseServer> {
     try {
-        const response = await fetch('/datos-aclarar')
+        const response = await fetch(`${HOST}/datos-aclarar`)
         return response.json()
     }
     catch(error) {
